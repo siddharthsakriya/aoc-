@@ -93,6 +93,80 @@ void partOne() {
     std::cout << "The answer for Part 1 is " << total << "\n"; 
 }
 
+void partTwo() {
+
+    std::vector<std::string> inputs = getInputs();
+    int total = 0;
+
+    std::string seg;
+
+    for (std::string input : inputs) {
+        
+        std::stringstream curr(input);
+        std::vector<std::string> split;
+
+        while (std::getline(curr, seg, ':')) {
+            split.push_back(seg);
+        }
+
+        std::string game_num = split[0];
+        std::string converted;
+        
+        for (auto &ch : game_num) {
+            if (std::isdigit(ch)) {
+                converted.append(std::string(1, ch));
+            }
+        }
+
+        int int_value = stoi(converted);
+
+        std::string seg2;
+        std::stringstream curr2 (split[1]);
+        std::vector<std::string> split2;
+
+        while (std::getline(curr2, seg2, ';')) {
+            split2.push_back(seg2);
+        }
+        
+        std::string seg3;
+        std::vector<std::string> individual_picks;
+        std::vector<std::string> split3;
+        for (const std::string& s : split2) {
+            std::stringstream curr3 (s);
+            while (std::getline(curr3, seg3, ',')) {
+                split3.push_back(seg3);
+            }
+        }    
+        
+        bool valid = true;
+        std::map<std::string, int> minNumber;
+
+        for (const std::string& s : split3) {
+            std::stringstream ss(s);
+            int num;
+            std::string colour;
+
+            ss >> num >> colour;
+
+            if (!minNumber.contains(colour)) {
+                minNumber[colour] = num;
+            } else {
+                minNumber[colour] = std::max(minNumber[colour], num);
+            }
+        }
+        int curr_total = 1;
+        for (const auto& pair : minNumber) {
+            curr_total *= pair.second;
+        }
+        total += curr_total;
+    }
+    std::cout << "The answer for Part 1 is " << total << "\n"; 
+}    
+
+    
+    
+
 int main() {
     partOne();
+    partTwo();
 }
