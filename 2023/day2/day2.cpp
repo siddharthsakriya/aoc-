@@ -163,8 +163,6 @@ void partTwo() {
     std::cout << "The answer for Part 1 is " << total << "\n"; 
 }    
 
-    
-    
 
 int main() {
     partOne();
